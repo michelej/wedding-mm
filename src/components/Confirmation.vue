@@ -11,14 +11,14 @@
           </p>
           <form>
             <div class="d-flex mt-10">
-              <v-text-field class="flex-grow-1" dense outlined v-model="phone" label="Teléfono"></v-text-field>
+              <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
               <v-btn elevation="2" class="ml-10 mt-0" color="primary" @click="searchPhone()">Buscar</v-btn>
             </div>
             <div v-if="searchDone">
               <div class="d-flex flex-column" v-if="phoneFound">
                 <div class="flex-grow-1">
                   <v-alert type="success">
-                    Hola! <strong>{{ user.name }}</strong>
+                    Hola! <strong>{{ user.fullname }}</strong>
                   </v-alert>
                 </div>
                 <div class="assitance-group">
@@ -42,11 +42,11 @@
                         </v-col>
                         <v-col cols="5" class="d-flex">
                           <v-select class="flex-grow-1" dense :items="personType" v-model="c.type" label="Adulto o Niño"
-                            outlined></v-select>      
-                            <v-btn color="error" class="button ml-5 mt-0" fab small @click="removeGuest(c.id)"><v-icon dark>
+                            outlined></v-select>
+                          <v-btn color="error" class="button ml-5 mt-0" fab small @click="removeGuest(c.id)"><v-icon dark>
                               mdi-minus
-                            </v-icon></v-btn>                    
-                        </v-col>                                                
+                            </v-icon></v-btn>
+                        </v-col>
                       </v-row>
                     </div>
                   </div>
@@ -86,36 +86,41 @@
 </template>
   
 <script>
+import api from "../services/backend";
 export default {
   name: 'ConfirmationPage',
-
   data() {
     return {
       counter: 0,
-      phone: '',
+      telephone: '',
       assistance: null,
       searchDone: false,
       phoneFound: false,
       guests: [],
       personType: ["Adulto", "Niño"],
-      user: {
-        name: "Michel Escobar"
-      }
+      user: {}
     };
+  },
+  async mounted() {
   },
   computed: {
   },
   methods: {
-    searchPhone() {
+    async searchPhone() {
       this.searchDone = true
       this.phoneFound = false
-      if (this.phone == '1') {
+      let response = await api.searchConfirmation(this.telephone);
+      if (response.length > 0) {
         this.phoneFound = true
+        this.user = {
+          fullname: response[0].get('fullname'),
+          telephone: response[0].get('telephone')
+        }
       }
     },
     addGuest() {
-      this.guests.push({ id: this.counter, name: '' , type: '' })
-      this.counter=this.counter+1;
+      this.guests.push({ id: this.counter, name: '', type: '' })
+      this.counter = this.counter + 1;
     },
     removeGuest(id) {
       if (this.guests.length == 1) {
@@ -124,26 +129,26 @@ export default {
         this.guests.splice(id, 1)
       }
     },
-    save() {    
-      let confirmation={}  
-      if(this.assistance=='true'){         
+    save() {
+      let confirmation = {}
+      if (this.assistance == 'true') {
         for (let index = 0; index < this.guests.length; index++) {
           const guest = this.guests[index];
-          if(guest.name == ''){
+          if (guest.name == '') {
             this.removeGuest(index)
           }
-        }        
-        confirmation={
-          telephone:this.phone,          
-          assistance:true,
-          guests:this.guests
-        }        
-      }else if(this.assistance=='false'){
-        confirmation={
-          telephone:this.phone,          
-          assistance:false,
-          guests:[]
-        }        
+        }
+        confirmation = {
+          telephone: this.telephone,
+          assistance: true,
+          guests: this.guests
+        }
+      } else if (this.assistance == 'false') {
+        confirmation = {
+          telephone: this.telephone,
+          assistance: false,
+          guests: []
+        }
       }
 
       console.log(confirmation);
@@ -152,7 +157,7 @@ export default {
         type: "success",
         timer: 3000
       });
-    }    
+    }
   }
 }
 </script>
