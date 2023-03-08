@@ -110,6 +110,7 @@ export default {
       this.searchDone = true
       this.phoneFound = false
       let response = await api.searchConfirmation(this.telephone);
+      console.log(response)
       if (response.length > 0) {
         this.phoneFound = true
         this.user = {
