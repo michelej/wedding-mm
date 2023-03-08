@@ -10,11 +10,11 @@
             nos hace ilusión) :)
           </p>
           <form>
-            <div class="d-flex mt-10">
+            <div class="d-flex">
               <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
               <v-btn elevation="2" class="ml-10 mt-0" color="primary" @click="searchPhone()">Buscar</v-btn>
             </div>
-            <div v-if="searchDone">
+            <div v-if="searchDone" class="search-field">
               <div class="d-flex flex-column" v-if="phoneFound">
                 <div class="flex-grow-1">
                   <v-alert type="success">
@@ -22,51 +22,68 @@
                   </v-alert>
                 </div>
                 <div class="assitance-group">
-                  <v-radio-group v-model="assistance" label="Primero que todo indicanos si vas a asistir?" :value="null">
-                    <v-radio label="Sí" value="true"></v-radio>
-                    <v-radio label="No" value="false"></v-radio>
+                  <v-radio-group v-model="user.assistance" label="Primero que todo indicanos si vas a asistir?"
+                    :value="null" @change="onOptionSelected">
+                    <v-radio label="Sí" :value="true"></v-radio>
+                    <v-radio label="No" :value="false"></v-radio>
                   </v-radio-group>
                 </div>
 
-                <div v-if="assistance == 'true'">
-                  <div class="flex-grow-1 mt-2 mb-4">
-                    Que buenas noticias!, a continuacion puedes agregar a las personas que te acompañaran.
-                  </div>
+                <div v-if="choiceSelected">
 
-                  <div v-for="c in guests" :key="c.id">
-                    <div class="d-flex">
-                      <v-row>
-                        <v-col cols="7" class="d-flex justify-center align-center">
-                          <v-text-field class="flex-grow-1" dense outlined v-model="c.name" label="Nombre del invitado"
-                            required></v-text-field>
-                        </v-col>
-                        <v-col cols="5" class="d-flex">
-                          <v-select class="flex-grow-1" dense :items="personType" v-model="c.type" label="Adulto o Niño"
-                            outlined></v-select>
-                          <v-btn color="error" class="button ml-5 mt-0" fab small @click="removeGuest(c.id)"><v-icon dark>
-                              mdi-minus
-                            </v-icon></v-btn>
-                        </v-col>
-                      </v-row>
+                  <div v-if="willAssist">
+
+                    <v-label for="textarea1">¿Alguna alergia o algo que debamos tener en cuenta?</v-label>
+                    <v-textarea outlined id="textarea1" v-model="user.allergies"></v-textarea>
+
+                    <v-label for="textarea2">Deja un comentario adicional si lo deseas</v-label>
+                    <v-textarea outlined id="textarea2" v-model="user.comments"></v-textarea>
+
+                    <v-checkbox v-model="checkbox" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
+
+
+                    <div class="flex-grow-1 mt-4 mb-4">
+                      A continuacion puedes agregar a las personas que te acompañaran.
                     </div>
+
+                    <div v-for="c in user.guests" :key="c.id">
+                      <div class="d-flex">
+                        <v-row>
+                          <v-col cols="7" class="d-flex justify-center align-center">
+                            <v-text-field class="flex-grow-1" dense outlined v-model="c.name" label="Nombre del invitado"
+                              required></v-text-field>
+                          </v-col>
+                          <v-col cols="5" class="d-flex">
+                            <v-select class="flex-grow-1" dense :items="personType" v-model="c.type" label="Adulto o Niño"
+                              outlined></v-select>
+                            <v-btn color="error" class="button ml-5 mt-0" fab small @click="removeGuest(c.id)"><v-icon
+                                dark>
+                                mdi-minus
+                              </v-icon></v-btn>
+                          </v-col>
+                        </v-row>
+                      </div>
+                    </div>
+
+                    <v-row>
+                      <v-col cols="6" class="d-flex justify-center align-center">
+                        <v-btn left color="primary" @click="addGuest()" full-width>Agregar invitado</v-btn>
+                      </v-col>
+                      <v-col cols="6" class="d-flex justify-center align-center">
+                        <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
+                      </v-col>
+                    </v-row>
                   </div>
 
-                  <v-row>
-                    <v-col cols="6" class="d-flex justify-center align-center">
-                      <v-btn left color="primary" @click="addGuest()" full-width>Agregar invitado</v-btn>
-                    </v-col>
-                    <v-col cols="6" class="d-flex justify-center align-center">
-                      <v-btn right color="secondary" @click="save()" full-width>Guardar Información</v-btn>
-                    </v-col>
-                  </v-row>
+                  <div v-else>
+                    <div class="flex-grow-1 mt-2 mb-2">
+                      Muchas gracias por confirmarnos.!
+                    </div>
+                    <v-btn right color="secondary" @click="save()" full-width>Guardar Información</v-btn>
+                  </div>
                 </div>
 
-                <div v-if="assistance == 'false'">
-                  <div class="flex-grow-1 mt-2 mb-2">
-                    Muchas gracias por confirmarnos.!
-                  </div>
-                  <v-btn right color="secondary" @click="save()" full-width>Guardar Información</v-btn>
-                </div>
+
 
               </div>
               <div class="d-flex" v-else>
@@ -75,10 +92,7 @@
                 </v-alert>
               </div>
             </div>
-
           </form>
-
-
         </v-col>
       </v-row>
     </v-container>
@@ -93,70 +107,87 @@ export default {
     return {
       counter: 0,
       telephone: '',
-      assistance: null,
       searchDone: false,
       phoneFound: false,
-      guests: [],
+      choiceSelected: false,
+      willAssist: false,
       personType: ["Adulto", "Niño"],
-      user: {}
+      user: {
+        assistance: null
+      },
+      ipAddress: ''
     };
   },
-  async mounted() {
+  mounted() {
+    fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => { this.ipAddress = data.ip; })
+      .catch(error => {
+        console.error('Error fetching IP address', error);
+      });
   },
   computed: {
   },
   methods: {
-    async searchPhone() {      
-      let response = await api.searchConfirmation(this.telephone);
-      this.searchDone = true
-      this.phoneFound = false      
-      if (response.status == 200) {
-        this.phoneFound = true
-        this.user = response.data
-        console.log(this.user)
-      }else if (response.status == 204) {
+    async searchPhone() {
+      try {
+        let response = await api.searchConfirmation(this.telephone);
+        this.searchDone = true
         this.phoneFound = false
+        if (response.status == 200) {
+          this.phoneFound = true
+          this.user = response.data
+          this.user.ipAddress = this.ipAddress
+          this.user.assistance = null
+        } else if (response.status == 204) {
+          this.phoneFound = false
+        }
+      } catch (error) {
+        this.$fire({
+          title: "Error",
+          text: "Ha ocurrido un error, Intentalo de nuevo mas tarde",
+          type: "error",
+          timer: 5000
+        });
       }
     },
     addGuest() {
-      this.guests.push({ id: this.counter, name: '', type: '' })
+      this.user.guests.push({ id: this.counter, name: '', type: this.personType[0] })
       this.counter = this.counter + 1;
     },
     removeGuest(id) {
-      if (this.guests.length == 1) {
-        this.guests = []
+      if (this.user.guests.length == 1) {
+        this.user.guests = []
       } else {
-        this.guests.splice(id, 1)
+        this.user.guests.splice(id, 1)
       }
     },
-    save() {
-      let confirmation = {}
-      if (this.assistance == 'true') {
-        for (let index = 0; index < this.guests.length; index++) {
-          const guest = this.guests[index];
-          if (guest.name == '') {
-            this.removeGuest(index)
-          }
+    onOptionSelected() {
+      this.choiceSelected = true
+      this.willAssist = this.user.assistance
+    },
+    async save() {
+      try {
+        if (this.user.assistance == true) {
+          this.user.guests = this.user.guests.filter(e => e.name != '')
+        } else {
+          this.user.guests = []
         }
-        confirmation = {
-          telephone: this.telephone,
-          assistance: true,
-          guests: this.guests
-        }
-      } else if (this.assistance == 'false') {
-        confirmation = {
-          telephone: this.telephone,
-          assistance: false,
-          guests: []
-        }
+        console.log(this.user);
+        await api.saveConfirmation(this.user);
+        this.$fire({
+          title: "Exito",
+          text: "El formulario se ha enviado con exito, ya tenemos tu información.",
+          type: "success",
+          timer: 3000
+        });
+      } catch (error) {
+        this.$fire({
+          title: "Error",
+          text: "Ha ocurrido un error, Intentalo de nuevo mas tarde",
+          type: "error",
+          timer: 5000
+        });
       }
 
-      console.log(confirmation);
-      this.$fire({
-        title: "Se han actualizado tu información!",
-        type: "success",
-        timer: 3000
-      });
     }
   }
 }
@@ -169,6 +200,10 @@ export default {
 
 .confirmation .v-input--radio-group legend.v-label {
   font-size: 18px !important;
+}
+
+.confirmation .search-field {
+  padding-bottom: 100px;
 }
 </style>
   
