@@ -8,13 +8,30 @@ Parse.initialize(
 
 exports.handler = async (event, context) => {
     const { telephone } = event.queryStringParameters;
-    const Confirmation = Parse.Object.extend('Confirmation');
-    const query = new Parse.Query(Confirmation);
+    const ConfirmationParse = Parse.Object.extend('Confirmation');
+    const query = new Parse.Query(ConfirmationParse);
     query.equalTo('telephone', telephone);
-    const response = await query.find();            
-  
-    return {
-      statusCode: 200,
-      body: JSON.stringify(response)
-    };
-  };
+    const response = await query.find(); 
+    console.log(JSON.stringify(response,"",2));      
+    
+    let obj={}
+    if(response.length >0){
+        obj={
+            fullname:response[0].get('fullname'),
+            telephone:response[0].get('telephone'),
+            objectId:response[0].get('objectId'),
+            comments:response[0].get('comments'),
+            assistance:response[0].get('assistance'),
+            guests:response[0].get('guests')
+        }
+        return {
+            statusCode: 200,
+            body: JSON.stringify(obj)
+          };
+    }else{
+        return {
+            statusCode: 204,
+            body: ''
+          };
+    }         
+};

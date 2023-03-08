@@ -106,17 +106,16 @@ export default {
   computed: {
   },
   methods: {
-    async searchPhone() {
-      this.searchDone = true
-      this.phoneFound = false
+    async searchPhone() {      
       let response = await api.searchConfirmation(this.telephone);
-      console.log(response)
-      if (response.length > 0) {
+      this.searchDone = true
+      this.phoneFound = false      
+      if (response.status == 200) {
         this.phoneFound = true
-        this.user = {
-          fullname: response[0].get('fullname'),
-          telephone: response[0].get('telephone')
-        }
+        this.user = response.data
+        console.log(this.user)
+      }else if (response.status == 204) {
+        this.phoneFound = false
       }
     },
     addGuest() {
