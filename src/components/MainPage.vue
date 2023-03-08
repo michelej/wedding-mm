@@ -5,13 +5,13 @@
         <v-col cols="8">
           <v-row class="">
             <v-col cols="4">
-              <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
+              <v-img :src="require('@/assets/photos/pic1.png')" aspect-ratio="1" cover></v-img>
             </v-col>
             <v-col cols="4">
-              <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
+              <v-img :src="require('@/assets/photos/pic2.jpeg')" aspect-ratio="1" cover></v-img>
             </v-col>
             <v-col cols="4">
-              <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
+              <v-img :src="require('@/assets/photos/pic3.jpeg')" aspect-ratio="1" cover></v-img>
             </v-col>
             
             <v-col cols="4">

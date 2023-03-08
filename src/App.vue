@@ -2,10 +2,10 @@
   <v-app>  
     <v-app-bar app>                    
       <template >
-        <v-tabs centered>              
-          <v-tab @click="changeTab('home')" id="home-tab">¡Bienvenidos!</v-tab>
-          <v-tab @click="changeTab('confirmation')" id="confirmation-tab">Confirma tu Asistencia</v-tab>          
-          <v-tab @click="changeTab('information')" id="information-tab">Información</v-tab>          
+        <v-tabs centered style="background-color: #222222;">              
+          <v-tab style="color:white;" @click="changeTab('home')" id="home-tab">¡Bienvenidos!</v-tab>
+          <v-tab style="color:white;" @click="changeTab('confirmation')" id="confirmation-tab">Confirma tu Asistencia</v-tab>          
+          <v-tab style="color:white;" @click="changeTab('information')" id="information-tab">Información</v-tab>          
         </v-tabs>
       </template>
     </v-app-bar>
