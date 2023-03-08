@@ -1,4 +1,4 @@
-//import axios from 'axios'
+import axios from 'axios'
 /*var Parse = require('parse');
 
 Parse.serverURL = process.env.VUE_APP_BACK_URL;

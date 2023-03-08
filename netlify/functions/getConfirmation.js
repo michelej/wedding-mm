@@ -1,4 +1,4 @@
-var Parse = require('parse');
+var Parse = require('parse/node');
 
 Parse.serverURL = process.env.VUE_APP_BACK_URL;
 Parse.initialize(
