@@ -2,100 +2,105 @@
   <v-main class="confirmation">
     <v-container grow d-flex flex-column flex-nowrap>
       <v-row justify="center" class="grow">
-        <v-col cols="5" class="main-row">
+        <v-col xs="12" sm="12" md="10" lg="9" xl="5" class="main-row">
           <v-card fill-height>
             <div class="card-content">
               <p class="text-top text-center">¿Nos acompañas o te lo pierdes?</p>
-              <p> Para confirmar tu asistencia a la boda solo tienes que escribir tu numero de teléfono y darle click en
+              <p class="text-content-top text-content text-justify"> Para confirmar tu asistencia a la boda solo tienes que escribir tu
+                numero de
+                teléfono y darle click en
                 <strong>buscar</strong>,
                 aparecerá tu nombre y solo tienes que decir si vienes o no a la boda. (lo de dejar mensaje es opcional
                 pero
                 nos hace ilusión) :)
               </p>
-              <form>
-                <div class="d-flex">
-                  <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
-                  <v-btn elevation="2" class="ml-10 mt-0" color="primary" @click="searchPhone()">Buscar</v-btn>
-                </div>
-                <div v-if="searchDone" class="search-field">
-                  <div class="d-flex flex-column" v-if="phoneFound">
-                    <div class="flex-grow-1">
-                      <v-alert type="success">
-                        Hola! <strong>{{ user.fullname }}</strong>
-                      </v-alert>
-                    </div>
-                    <div class="assitance-group">
-                      <v-radio-group v-model="user.assistance" label="Primero que todo indicanos si vas a asistir?"
-                        :value="null" @change="onOptionSelected">
-                        <v-radio label="Sí" :value="true"></v-radio>
-                        <v-radio label="No" :value="false"></v-radio>
-                      </v-radio-group>
-                    </div>
 
-                    <div v-if="choiceSelected">
+              <div class="d-flex">
+                <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
+                <v-btn elevation="2" class="ml-2" color="primary" @click="searchPhone()">Buscar</v-btn>
+              </div>
 
-                      <div v-if="willAssist">
+              <div class="d-flex" v-if="resultDone">
+                <v-alert type="success" class="text-justify">Hemos recopilado tu información, si lo deseas lo puedes volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el <strong>{{deadline}}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</v-alert>
+              </div>
 
-                        <v-label for="textarea1">¿Alguna alergia o algo que debamos tener en cuenta?</v-label>
-                        <v-textarea outlined id="textarea1" v-model="user.allergies"></v-textarea>
-
-                        <v-label for="textarea2">Deja un comentario adicional si lo deseas</v-label>
-                        <v-textarea outlined id="textarea2" v-model="user.comments"></v-textarea>
-
-                        <v-checkbox v-model="checkbox" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
-
-
-                        <div class="flex-grow-1 mt-4 mb-4">
-                          A continuacion puedes agregar a las personas que te acompañaran.
-                        </div>
-
-                        <div v-for="c in user.guests" :key="c.id">
-                          <div class="d-flex">
-                            <v-row>
-                              <v-col cols="7" class="d-flex justify-center align-center">
-                                <v-text-field class="flex-grow-1" dense outlined v-model="c.name"
-                                  label="Nombre del invitado" required></v-text-field>
-                              </v-col>
-                              <v-col cols="5" class="d-flex">
-                                <v-select class="flex-grow-1" dense :items="personType" v-model="c.type"
-                                  label="Adulto o Niño" outlined></v-select>
-                                <v-btn color="error" class="button ml-5 mt-0" fab small @click="removeGuest(c.id)"><v-icon
-                                    dark>
-                                    mdi-minus
-                                  </v-icon></v-btn>
-                              </v-col>
-                            </v-row>
-                          </div>
-                        </div>
-
-                        <v-row>
-                          <v-col cols="6" class="d-flex justify-center align-center">
-                            <v-btn left color="primary" @click="addGuest()" full-width>Agregar invitado</v-btn>
-                          </v-col>
-                          <v-col cols="6" class="d-flex justify-center align-center">
-                            <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
-                          </v-col>
-                        </v-row>
-                      </div>
-
-                      <div v-else>
-                        <div class="flex-grow-1 mt-2 mb-2">
-                          Muchas gracias por confirmarnos.!
-                        </div>
-                        <v-btn right color="secondary" @click="save()" full-width>Guardar Información</v-btn>
-                      </div>
-                    </div>
-
-
-
-                  </div>
-                  <div class="d-flex" v-else>
-                    <v-alert class="flex-grow-1" type="warning">
-                      Hola! parece que no hemos encontrado tu numero de teléfono.
+              <div v-if="searchDone" class="search-field">
+                <div class="d-flex flex-column" v-if="phoneFound">
+                  <div class="flex-grow-1">
+                    <v-alert type="success">
+                      Hola! <strong>{{ user.fullname }}</strong>
                     </v-alert>
                   </div>
+                  <div class="assitance-group">
+                    <v-radio-group v-model="user.assistance" label="Primero que todo indicanos si vas a asistir?"
+                      :value="null" @change="onOptionSelected">
+                      <v-radio label="Sí" :value="true"></v-radio>
+                      <v-radio label="No" :value="false"></v-radio>
+                    </v-radio-group>
+                  </div>
+
+                  <div v-if="choiceSelected">
+                    <div v-if="willAssist">
+
+                      <v-label for="textarea1">¿Alguna alergia o algo que debamos tener en cuenta?</v-label>
+                      <v-textarea outlined id="textarea1" v-model="user.allergies"></v-textarea>
+
+                      <v-label for="textarea2">Deja un comentario adicional si lo deseas</v-label>
+                      <v-textarea outlined id="textarea2" v-model="user.comments"></v-textarea>
+
+                      <v-checkbox v-model="user.autocar" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
+
+
+                      <div class="flex-grow-1 mt-4 mb-4 text-content">
+                        A continuacion puedes agregar a las personas que te acompañaran.
+                      </div>
+
+
+                      <v-row align-content="stretch" class="bordered" v-for="c in user.guests" :key="c.id">
+                        <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
+                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name"
+                            label="Nombre del invitado" required></v-text-field>
+                        </v-col>
+                        <v-col cols="8" xs="12" sm="12" md="12" lg="5" xl="4" class="pt-0 pb-0">
+                          <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
+                            label="Adulto o Niño" outlined></v-select>
+                        </v-col>
+                        <v-col cols="4" xs="12" sm="12" md="12" lg="5" xl="1" class="pt-0 pb-0">
+                          <v-btn color="error" class="button ml-2 mt-0" fab small @click="removeGuest(c.id)"><v-icon dark>
+                              mdi-minus
+                            </v-icon></v-btn>
+                        </v-col>
+                      </v-row>
+
+
+                      <v-row>
+                        <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
+                          <v-btn left color="primary" @click="addGuest()" full-width>Agregar invitado</v-btn>
+                        </v-col>
+                        <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
+                          <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
+                        </v-col>
+                      </v-row>
+                    </div>
+
+                    <div v-else>
+                      <v-row align="center" justify="center">
+                        <v-col cols="12">
+                          <p class="text-center">Muchas gracias por confirmarnos.!</p>
+                        </v-col>
+                        <v-btn class="center" color="success" @click="save()" full-width>Guardar Información</v-btn>
+                      </v-row>
+                    </div>
+                  </div>
+
                 </div>
-              </form>
+                <div class="d-flex" v-else>
+                  <v-alert class="flex-grow-1" type="warning">
+                    Hola! parece que no hemos encontrado tu numero de teléfono.
+                  </v-alert>
+                </div>
+              </div>
+
             </div>
           </v-card>
 
@@ -111,6 +116,7 @@ export default {
   name: 'ConfirmationPage',
   data() {
     return {
+      resultDone: false,
       counter: 0,
       telephone: '',
       searchDone: false,
@@ -121,7 +127,8 @@ export default {
       user: {
         assistance: null
       },
-      ipAddress: ''
+      ipAddress: '',
+      deadline:'10 de Abril'
     };
   },
   mounted() {
@@ -135,6 +142,7 @@ export default {
   methods: {
     async searchPhone() {
       try {
+        this.resultDone=false;
         let response = await api.searchConfirmation(this.telephone);
         this.searchDone = true
         this.phoneFound = false
@@ -143,6 +151,7 @@ export default {
           this.user = response.data
           this.user.ipAddress = this.ipAddress
           this.user.assistance = null
+          this.user.autocar = null
         } else if (response.status == 204) {
           this.phoneFound = false
         }
@@ -170,6 +179,17 @@ export default {
       this.choiceSelected = true
       this.willAssist = this.user.assistance
     },
+    reset() {
+      this.counter = 0
+      this.telephone = ''
+      this.searchDone = false
+      this.phoneFound = false
+      this.choiceSelected = false
+      this.willAssist = false
+      this.user = {
+        assistance: null
+      }      
+    },
     async save() {
       try {
         if (this.user.assistance == true) {
@@ -179,6 +199,8 @@ export default {
         }
         console.log(this.user);
         await api.saveConfirmation(this.user);
+        this.reset();
+        this.resultDone=true
         this.$fire({
           title: "Exito",
           text: "El formulario se ha enviado con exito, ya tenemos tu información.",
@@ -198,31 +220,73 @@ export default {
   }
 }
 </script>
-<style>
-.confirmation {  
-  background: url('../assets/flower-background-floral-border.jpg') no-repeat center center fixed; 
+<style lang="scss">
+.confirmation {
+  background: url('../assets/flower-background-floral-border.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  .text-top {
+    padding: 20px 0px 0px 0px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  .card-content {
+    padding: 20px;
+    min-height: 85vh;
+  }
+
+  .v-input--radio-group legend.v-label {
+    font-size: 18px !important;
+  }
+
+  .v-input--radio-group legend.v-label {
+    font-size: 18px !important;
+  }
+
+  .search-field {
+    padding-bottom: 100px;
+  }
+
+  .bordered {
+    border: 1px dotted rgb(109, 109, 109);
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+
+  .small .v-input__control input {
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 4px;
+  }
 }
 
-.confirmation .text-top {
-  padding: 20px 0px 0px 0px;
-  font-size: 40px;
-}
+@media (max-width: 480px) {
+  .confirmation {
+    .text-top {
+      font-size: 20px;
+    }
 
-.confirmation .card-content {
-  padding:20px;
-  min-height: 85vh;
-}
+    .text-content {
+      font-size: 15px;
+    }
 
-.confirmation .v-input--radio-group legend.v-label {
-  font-size: 18px !important;
-}
+    .v-label {
+      font-size: 14px;
+    }
 
-.confirmation .search-field {
-  padding-bottom: 100px;
+    .v-input--radio-group legend.v-label {
+      font-size: 14px !important;
+    }
+
+    .v-input--radio-group legend.v-label {
+      font-size: 14px !important;
+    }
+  }
 }
 </style>
   

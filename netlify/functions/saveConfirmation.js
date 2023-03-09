@@ -20,6 +20,7 @@ exports.handler = async (event, context) => {
         object.set('comments',data.comments);
         object.set('ipAddress',data.ipAddress);
         object.set('allergies',data.allergies);
+        object.set('autocar',data.autocar);
     
         const response = await object.save();
         return {
