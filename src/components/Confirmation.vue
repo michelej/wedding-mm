@@ -2,17 +2,21 @@
   <v-main class="confirmation">
     <v-container grow d-flex flex-column flex-nowrap>
       <v-row justify="center" class="grow">
-        <v-col xs="12" sm="12" md="10" lg="9" xl="5" class="main-row">
+        
+        <v-col xs="12" sm="12" md="10" lg="9" xl="7" class="main-row">
           <v-card fill-height>
             <div class="card-content">
+
               <header-couple></header-couple>
 
-              <v-row>
+              <v-row class="pt-5 pb-0">
                 <v-col cols="12">
+                  <div class="text-top text-center">¿Nos acompañas o te lo pierdes?</div>
+                </v-col>
+                <v-col cols="12" xl="6">
                   <v-img :src="require('@/assets/rsvp-card.jpg')" height="180px"></v-img>
                 </v-col>
-                <v-col cols="12">
-                  <p class="text-top text-center">¿Nos acompañas o te lo pierdes?</p>
+                <v-col cols="12" xl="6">
                   <p class="text-content-top text-content text-justify"> Para confirmar tu asistencia a la boda solo
                     tienes que escribir tu
                     numero de
@@ -25,16 +29,20 @@
                 </v-col>
               </v-row>
 
+              <v-row>
+                <v-col cols="12" xl="8" offset-xl="2">
+                  <div class="d-flex">
+                    <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
+                    <v-btn elevation="2" class="ml-2" color="primary" @click="searchPhone()">Buscar</v-btn>
+                  </div>
+                </v-col>
+              </v-row>
 
-              <div class="d-flex">
-                <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
-                <v-btn elevation="2" class="ml-2" color="primary" @click="searchPhone()">Buscar</v-btn>
-              </div>
 
               <div class="d-flex" v-if="resultDone">
-                <v-alert type="success" class="text-justify">Hemos recopilado tu información, si lo deseas lo puedes
+                <div class="result-done text-justify">Hemos recopilado tu información, si lo deseas lo puedes
                   volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el
-                  <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</v-alert>
+                  <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</div>
               </div>
 
               <div v-if="searchDone" class="search-field">
@@ -53,7 +61,29 @@
                   </div>
 
                   <div v-if="choiceSelected">
-                    <div v-if="willAssist">
+                    <div v-if="willAssist">                      
+                      
+                      <v-row align-content="stretch" class="bordered" v-for="(c,index) in user.guests" :key="c.id">                        
+                        <v-col cols="6">
+                          <div><strong>Acompañante {{index+1}}</strong></div>                          
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                          <v-btn color="error" class="button ml-2 mt-0 right" fab small @click="removeGuest(c.id)"><v-icon dark>
+                              mdi-minus
+                            </v-icon></v-btn>
+                        </v-col>
+                        <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
+                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name"
+                            label="Nombre completo" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" xs="12" sm="12" md="12" lg="5" xl="5" class="pt-0 pb-0">
+                          <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
+                            label="Adulto o Niño" outlined></v-select>
+                        </v-col>                        
+                      </v-row>
+                      <v-col xs="12" class="d-flex mb-5">
+                       <v-btn left color="primary" @click="addGuest()" full-width>Añadir acompañante o hijos</v-btn>
+                      </v-col>
 
                       <v-label for="textarea1">¿Alguna alergia o algo que debamos tener en cuenta?</v-label>
                       <v-textarea outlined id="textarea1" v-model="user.allergies"></v-textarea>
@@ -63,33 +93,11 @@
 
                       <v-checkbox v-model="user.autocar" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
 
-
-                      <div class="flex-grow-1 mt-4 mb-4 text-content">
-                        A continuacion puedes agregar a las personas que te acompañaran.
-                      </div>
+                      
+                      
 
 
-                      <v-row align-content="stretch" class="bordered" v-for="c in user.guests" :key="c.id">
-                        <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
-                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name"
-                            label="Nombre del invitado" required></v-text-field>
-                        </v-col>
-                        <v-col cols="8" xs="12" sm="12" md="12" lg="5" xl="4" class="pt-0 pb-0">
-                          <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
-                            label="Adulto o Niño" outlined></v-select>
-                        </v-col>
-                        <v-col cols="4" xs="12" sm="12" md="12" lg="5" xl="1" class="pt-0 pb-0">
-                          <v-btn color="error" class="button ml-2 mt-0" fab small @click="removeGuest(c.id)"><v-icon dark>
-                              mdi-minus
-                            </v-icon></v-btn>
-                        </v-col>
-                      </v-row>
-
-
-                      <v-row>
-                        <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
-                          <v-btn left color="primary" @click="addGuest()" full-width>Agregar invitado</v-btn>
-                        </v-col>
+                      <v-row>                   
                         <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
                           <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
                         </v-col>
@@ -246,8 +254,8 @@ export default {
   background-size: cover;
 
   .text-top {
-    padding: 20px 0px 0px 0px;
-    font-size: 40px;
+    padding: 0px;
+    font-size: 30px;
     font-weight: bold;
   }
 
@@ -272,6 +280,7 @@ export default {
     border: 1px dotted rgb(109, 109, 109);
     padding: 10px;
     margin-bottom: 5px;
+    background-color: #efefef;
   }
 
   .small .v-input__control input {
@@ -279,6 +288,10 @@ export default {
     height: 24px;
     line-height: 24px;
     padding: 0 4px;
+  }
+  .result-done{
+    border: #88a185 solid 1px;    
+    padding: 10px;
   }
 }
 

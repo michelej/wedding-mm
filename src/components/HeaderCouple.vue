@@ -64,7 +64,8 @@ export default {
     .header-text{
       font-size: 30px;
       color:#3e4c3c;
-      font-weight: 400;
+      font-weight: 500;
+      font-family: "Bree Serif", serif;
     }
     .couples-text{
       text-align: center;
