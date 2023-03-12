@@ -4,23 +4,22 @@
       <v-row align-content="stretch">
         <v-col cols="12" sm="12" md="8" lg="7" xl="7">
           <v-row>
-            <v-col cols="4">
+            <v-col cols="6" sm="4" md="4" lg="4" xl="4">
               <v-img :src="require('@/assets/photos/pic1.png')" aspect-ratio="1" cover></v-img>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="6" sm="4" md="4" lg="4" xl="4">
               <v-img :src="require('@/assets/photos/pic2.jpeg')" aspect-ratio="1" cover></v-img>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="6" sm="4" md="4" lg="4" xl="4">
               <v-img :src="require('@/assets/photos/pic3.jpeg')" aspect-ratio="1" cover></v-img>
             </v-col>
-
-            <v-col cols="4">
+            <v-col cols="6" sm="4" md="4" lg="4" xl="4">
               <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="4" class="d-none d-md-flex d-lg-flex">
               <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="4" class="d-none d-md-flex d-lg-flex">
               <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
             </v-col>
 

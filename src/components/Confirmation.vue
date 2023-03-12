@@ -5,15 +5,26 @@
         <v-col xs="12" sm="12" md="10" lg="9" xl="5" class="main-row">
           <v-card fill-height>
             <div class="card-content">
-              <p class="text-top text-center">¿Nos acompañas o te lo pierdes?</p>
-              <p class="text-content-top text-content text-justify"> Para confirmar tu asistencia a la boda solo tienes que escribir tu
-                numero de
-                teléfono y darle click en
-                <strong>buscar</strong>,
-                aparecerá tu nombre y solo tienes que decir si vienes o no a la boda. (lo de dejar mensaje es opcional
-                pero
-                nos hace ilusión) :)
-              </p>
+              <header-couple></header-couple>
+
+              <v-row>
+                <v-col cols="12">
+                  <v-img :src="require('@/assets/rsvp-card.jpg')" height="180px"></v-img>
+                </v-col>
+                <v-col cols="12">
+                  <p class="text-top text-center">¿Nos acompañas o te lo pierdes?</p>
+                  <p class="text-content-top text-content text-justify"> Para confirmar tu asistencia a la boda solo
+                    tienes que escribir tu
+                    numero de
+                    teléfono y darle click en
+                    <strong>buscar</strong>,
+                    aparecerá tu nombre y solo tienes que decir si vienes o no a la boda. (lo de dejar mensaje es opcional
+                    pero
+                    nos hace ilusión) :)
+                  </p>
+                </v-col>
+              </v-row>
+
 
               <div class="d-flex">
                 <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
@@ -21,7 +32,9 @@
               </div>
 
               <div class="d-flex" v-if="resultDone">
-                <v-alert type="success" class="text-justify">Hemos recopilado tu información, si lo deseas lo puedes volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el <strong>{{deadline}}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</v-alert>
+                <v-alert type="success" class="text-justify">Hemos recopilado tu información, si lo deseas lo puedes
+                  volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el
+                  <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</v-alert>
               </div>
 
               <div v-if="searchDone" class="search-field">
@@ -111,9 +124,13 @@
 </template>
   
 <script>
+import HeaderCouple from "@/components/HeaderCouple.vue";
 import api from "../services/backend";
 export default {
   name: 'ConfirmationPage',
+  components: {
+    HeaderCouple,
+  },
   data() {
     return {
       resultDone: false,
@@ -128,7 +145,7 @@ export default {
         assistance: null
       },
       ipAddress: '',
-      deadline:'10 de Abril'
+      deadline: '10 de Abril'
     };
   },
   mounted() {
@@ -142,7 +159,7 @@ export default {
   methods: {
     async searchPhone() {
       try {
-        this.resultDone=false;
+        this.resultDone = false;
         let response = await api.searchConfirmation(this.telephone);
         this.searchDone = true
         this.phoneFound = false
@@ -188,7 +205,7 @@ export default {
       this.willAssist = false
       this.user = {
         assistance: null
-      }      
+      }
     },
     async save() {
       try {
@@ -200,7 +217,7 @@ export default {
         console.log(this.user);
         await api.saveConfirmation(this.user);
         this.reset();
-        this.resultDone=true
+        this.resultDone = true
         this.$fire({
           title: "Exito",
           text: "El formulario se ha enviado con exito, ya tenemos tu información.",
