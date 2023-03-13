@@ -65,7 +65,8 @@ export default {
       font-size: 30px;
       color:#3e4c3c;
       font-weight: 500;
-      font-family: "Bree Serif", serif;
+      //font-family: "Bree Serif", serif;
+      font-family: "Montez", cursive, "Times New Roman", serif;
     }
     .couples-text{
       text-align: center;

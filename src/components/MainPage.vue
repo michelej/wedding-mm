@@ -27,41 +27,57 @@
 
 
               <v-row>
-                <v-col cols="12" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
                   <div class="text-header">Michel y Marlis</div>
                 </v-col>
-                <v-col cols="12" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
                   <div class="v-center text-top">¡Nos casamos!</div>
                 </v-col>
-                <v-col cols="auto" class="d-flex align-center justify-center">
+                <v-col cols="auto" xl="8" offset-xl="2" class="d-flex align-center justify-center">
                   <p> Movidos por el amor, con la alegría de nuestros familiares y la bendición Dios, nos haría mucha
                     ilusión
                     que nos acompañeis a compartir el momento más importante de nuestras vidas, el dia de nuestra boda.
                   </p>
                 </v-col>
-                <v-col cols="12" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
                   <div class="v-center text-date">Será el SÁBADO 22 de ABRIL 2023</div>
                 </v-col>
-                <v-col cols="5" class="d-flex align-center justify-center">
+                
+                <v-col cols="12" xl="4" offset-xl="2" class="d-flex align-center justify-center">
                   <v-img contain :src="require('@/assets/church_outline_2.png')"
                     style="height: 200px; width: 50px;"></v-img>
                 </v-col>
-                <v-col cols="7" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="4"  class="d-flex align-center justify-center">
                   <p>La ceremonia tendrá lugar a las 17:30h en la Iglesia San Sebastián Mártir <br> (San Sebastián de
                     los
-                    Reyes) - Madrid</p>
+                    Reyes) - Madrid</p>                    
+                </v-col>           
+                <v-col cols="12" xl="4" class="align-center justify-center d-flex d-sm-flex d-md-none d-lg-none d-xl-none">
+                  <v-img contain :src="require('@/assets/logo_quinta_jarama.png')"
+                    style="height: 150px; width: 50px;"></v-img>
                 </v-col>
-                <v-col cols="7" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="4" offset-xl="2"  class="d-flex align-center justify-center">
                   <p>Seguidamente lo celebraremos en <br> La Quinta de Jarama - <br> A1 Carretera de Burgos, KM 26,
                     28702
                     Madrid</p>
                 </v-col>
-                <v-col cols="5" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="4" class="align-center justify-center d-none d-md-flex d-lg-flex d-xl-flex">
                   <v-img contain :src="require('@/assets/logo_quinta_jarama.png')"
                     style="height: 200px; width: 50px;"></v-img>
                 </v-col>
+                
               </v-row>
-
+              
+              <v-row>
+                <v-col cols="12" lg="10" xl="10" offset-xl="1" offset-lg="1">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1515.8792043060669!2d-3.626743542949329!3d40.54692635630241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422cfcca8ca953%3A0xe93403609b0f18c2!2sParroquia%20San%20Sebasti%C3%A1n%20M%C3%A1rtir!5e0!3m2!1ses!2ses!4v1678734476322!5m2!1ses!2ses" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </v-col>                    
+              </v-row>
+              <v-row>
+                <v-col cols="12" lg="10" xl="10" offset-xl="1" offset-lg="1">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3029.031889572885!2d-3.5810626843617905!3d40.60712005196174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd43cd63b4b10479%3A0x2904104e484f4b98!2sLa%20Quinta%20de%20Jarama!5e0!3m2!1ses!2ses!4v1678734781154!5m2!1ses!2ses" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </v-col>                    
+              </v-row>            
             </div>
           </v-card>
         </v-col>
@@ -79,7 +95,18 @@ export default {
   components: {
     HeaderCouple,
   },
-  name: 'MainPage'
+  name: 'MainPage',
+  data() {
+    return {
+     
+    }
+  },
+  mounted() {
+   
+  },
+  methods: {
+   
+  }
 }
 </script>
   
