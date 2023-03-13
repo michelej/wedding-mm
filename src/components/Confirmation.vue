@@ -17,7 +17,7 @@
                   <v-img :src="require('@/assets/rsvp-card.jpg')" height="180px"></v-img>
                 </v-col>
                 <v-col cols="12" xl="6">
-                  <p class="text-content-top text-content text-justify"> Para confirmar tu asistencia a la boda solo
+                  <p class="text-content-top text-content text-justify texts"> Para confirmar tu asistencia a la boda solo
                     tienes que escribir tu
                     numero de
                     teléfono y darle click en

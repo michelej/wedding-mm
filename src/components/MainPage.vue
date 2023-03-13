@@ -28,18 +28,18 @@
 
               <v-row>
                 <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
-                  <div class="text-header">Michel y Marlis</div>
+                  <div class="text-header texts">Michel y Marlis</div>
                 </v-col>
                 <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
-                  <div class="v-center text-top">¡Nos casamos!</div>
+                  <div class="v-center text-top texts">¡Nos casamos!</div>
                 </v-col>
-                <v-col cols="auto" xl="8" offset-xl="2" class="d-flex align-center justify-center">
+                <v-col cols="auto" xl="8" offset-xl="2" class="d-flex align-center justify-center texts">
                   <p> Movidos por el amor, con la alegría de nuestros familiares y la bendición Dios, nos haría mucha
                     ilusión
                     que nos acompañeis a compartir el momento más importante de nuestras vidas, el dia de nuestra boda.
                   </p>
                 </v-col>
-                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
+                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center texts">
                   <div class="v-center text-date">Será el SÁBADO 22 de ABRIL 2023</div>
                 </v-col>
                 
@@ -47,7 +47,7 @@
                   <v-img contain :src="require('@/assets/church_outline_2.png')"
                     style="height: 200px; width: 50px;"></v-img>
                 </v-col>
-                <v-col cols="12" xl="4"  class="d-flex align-center justify-center">
+                <v-col cols="12" xl="4"  class="d-flex align-center justify-center texts">
                   <p>La ceremonia tendrá lugar a las 17:30h en la Iglesia San Sebastián Mártir <br> (San Sebastián de
                     los
                     Reyes) - Madrid</p>                    
@@ -56,7 +56,7 @@
                   <v-img contain :src="require('@/assets/logo_quinta_jarama.png')"
                     style="height: 150px; width: 50px;"></v-img>
                 </v-col>
-                <v-col cols="12" xl="4" offset-xl="2"  class="d-flex align-center justify-center">
+                <v-col cols="12" xl="4" offset-xl="2"  class="d-flex align-center justify-center texts">
                   <p>Seguidamente lo celebraremos en <br> La Quinta de Jarama - <br> A1 Carretera de Burgos, KM 26,
                     28702
                     Madrid</p>

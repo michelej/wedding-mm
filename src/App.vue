@@ -104,9 +104,11 @@ export default {
 </script>
 <style lang="scss">
 .v-application {
-  font-family: "Montez", cursive, "Times New Roman", serif;
-  line-height: 1.5;
-  font-size: 18px;
+  .texts{
+    font-family: "Montez", cursive, "Times New Roman", serif;
+    line-height: 1.5;
+    font-size: 18px;
+  }  
 }
 
 .header-app {
