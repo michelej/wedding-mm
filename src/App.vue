@@ -105,7 +105,7 @@ export default {
 <style lang="scss">
 .v-application {
   .texts{
-    font-family: "Montez", cursive, "Times New Roman", serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     line-height: 1.5;
     font-size: 18px;
   }  
