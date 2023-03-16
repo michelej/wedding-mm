@@ -103,6 +103,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "@/assets/scss/variables.scss";
 .v-application {
   .texts{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -112,7 +113,7 @@ export default {
 }
 
 .header-app {
-  background-color: #88a185 !important;
+  background-color: $theme-main-color !important;
 }
 
 .side-menu {
@@ -120,7 +121,7 @@ export default {
     padding: 0px;
   }
 
-  background-color: rgb(108, 128, 106) !important;
+  background-color: $theme-main-color-darker !important;
 
   .text-link {
     color: white;
@@ -134,7 +135,7 @@ export default {
   }
 
   .active {
-    background-color: rgb(136, 161, 133);
+    background-color: $theme-main-color-light;
   }
 }
 </style>

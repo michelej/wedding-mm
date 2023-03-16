@@ -246,12 +246,10 @@ export default {
 }
 </script>
 <style lang="scss">
+@import "@/assets/scss/variables.scss";
 .confirmation {
-  background: url('../assets/flower-background-floral-border.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: rgb(244,244,244);
+  background: linear-gradient(90deg, rgba(244,244,244,1) 0%, rgba(227,236,227,1) 50%, rgba(219,226,221,1) 100%);
 
   .text-top {
     padding: 0px;

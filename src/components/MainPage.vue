@@ -11,7 +11,7 @@
 
               <v-row class="pt-5">
                 <v-col cols="6" sm="4" md="4" lg="4" xl="6">
-                  <v-img :src="require('@/assets/photos/pic1.png')" aspect-ratio="1" cover></v-img>
+                  <v-img :src="require('@/assets/photos/pic4.jpg')" aspect-ratio="1" cover></v-img>
                 </v-col>
                 <v-col cols="6" sm="4" md="4" lg="4" xl="6">
                   <v-img :src="require('@/assets/photos/pic2.jpeg')" aspect-ratio="1" cover></v-img>
@@ -20,7 +20,7 @@
                   <v-img :src="require('@/assets/photos/pic3.jpeg')" aspect-ratio="1" cover></v-img>
                 </v-col>
                 <v-col cols="6" sm="4" md="4" lg="4" xl="6">
-                  <v-img :src="require('@/assets/Couple-Pose-scaled.jpg')" aspect-ratio="1" cover></v-img>
+                  <v-img :src="require('@/assets/photos/pic5.jpg')" aspect-ratio="1" cover></v-img>
                 </v-col>
 
               </v-row>
@@ -111,12 +111,11 @@ export default {
 </script>
   
 <style lang="scss">
+@import "@/assets/scss/variables.scss";
 .main-page {
-  background: url('../assets/flower-background-floral-border.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: rgb(244,244,244);
+  background: linear-gradient(90deg, rgba(244,244,244,1) 0%, rgba(227,236,227,1) 50%, rgba(219,226,221,1) 100%);
+  
 
   .card-content {
     padding: 20px;

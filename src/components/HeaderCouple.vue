@@ -60,6 +60,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/variables.scss";
   .header-theme{    
     .header-text{
       font-size: 30px;
@@ -74,7 +75,7 @@ export default {
       justify-content: center; 
     }
     .background{
-      background-color: #88a185;
+      background-color: $theme-main-color;
     }
     .white-text{
       color:white;
