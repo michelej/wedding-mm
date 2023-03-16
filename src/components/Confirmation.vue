@@ -29,10 +29,11 @@
                 </v-col>
               </v-row>
 
-              <v-row>
+              <v-row class="mb-5">
                 <v-col cols="12" xl="8" offset-xl="2">
                   <div class="d-flex">
-                    <v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>
+                    <!--<v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>-->
+                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries'/>
                     <v-btn elevation="2" class="ml-2" color="primary" @click="searchPhone()">Buscar</v-btn>
                   </div>
                 </v-col>
@@ -93,9 +94,6 @@
 
                       <v-checkbox v-model="user.autocar" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
 
-                      
-                      
-
 
                       <v-row>                   
                         <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
@@ -133,11 +131,14 @@
   
 <script>
 import HeaderCouple from "@/components/HeaderCouple.vue";
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import api from "../services/backend";
 export default {
   name: 'ConfirmationPage',
   components: {
     HeaderCouple,
+    VuePhoneNumberInput
   },
   data() {
     return {
@@ -153,7 +154,15 @@ export default {
         assistance: null
       },
       ipAddress: '',
-      deadline: '10 de Abril'
+      deadline: '10 de Abril',
+      translations:{
+        countrySelectorLabel: 'Pais',
+        countrySelectorError: 'Elige un Pais',
+        phoneNumberLabel: 'Teléfono',
+        example: 'Ejemplo :'
+      },
+      countries:["ES","DE","CO","VE"],
+      defaultCountry:"ES"
     };
   },
   mounted() {
@@ -167,8 +176,8 @@ export default {
   methods: {
     async searchPhone() {
       try {
-        this.resultDone = false;
-        let response = await api.searchConfirmation(this.telephone);
+        this.resultDone = false;        
+        let response = await api.searchConfirmation(this.telephone.replaceAll(" ",""));
         this.searchDone = true
         this.phoneFound = false
         if (response.status == 200) {
@@ -221,8 +230,7 @@ export default {
           this.user.guests = this.user.guests.filter(e => e.name != '')
         } else {
           this.user.guests = []
-        }
-        console.log(this.user);
+        }        
         await api.saveConfirmation(this.user);
         this.reset();
         this.resultDone = true
