@@ -51,7 +51,7 @@
           <v-tab class="d-none d-md-flex d-lg-flex" style="color:white;" @click="changeTab('information')"
             id="information-tab">
             <div v-if="$vuetify.breakpoint.smAndDown">Info</div>
-            <div v-else>Información</div>
+            <div v-else>Cronograma</div>
           </v-tab>
         </v-tabs>
       </v-app-bar>

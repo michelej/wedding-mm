@@ -10,7 +10,7 @@
                             <header-couple></header-couple>
                             <v-row justify="center">
 
-                                <v-col cols="12" lg="8" xl="8" class="mt-10">
+                                <v-col cols="12" lg="6" xl="6" class="mt-10">
                                     <h1 class="text-center">Cronograma</h1>
                                     <v-timeline align-top dense>
                                         <v-timeline-item color="teal lighten-3" small>
@@ -84,7 +84,7 @@
                                     </v-timeline>
                                 </v-col>
                             </v-row>
-                            <v-row justify="center" class="mt-10">
+                            <!--<v-row justify="center" class="mt-10">
                                 <v-col cols="12" lg="8" xl="8">
                                     <div class="info-text texts">
                                         <p><strong>Recordad</strong> lo más importante es que vengáis con ilusión, alegría y
@@ -95,9 +95,7 @@
                                         <p>ES07 1465 0100 95 2043889715<br>Michel Escobar</p>
                                     </div>
                                 </v-col>
-
-
-                            </v-row>
+                            </v-row>-->
                         </div>
                     </v-card>
                 </v-col>
