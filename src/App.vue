@@ -29,7 +29,7 @@
 
           <v-list-item class="side-menu-link" :class="isActive('information')" link @click="changeTab('information')">
             <v-list-item-content>
-              <v-list-item-title class="text-link">Información</v-list-item-title>
+              <v-list-item-title class="text-link">Cronograma</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
