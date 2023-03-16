@@ -58,10 +58,10 @@
                                         <v-timeline-item color="teal lighten-3" small>
                                             <v-row class="pt-1">
                                                 <v-col cols="4">
-                                                    <strong>00:30</strong>
+                                                    <strong>23:00</strong>
                                                 </v-col>
                                                 <v-col>
-                                                    <strong>Fiesta / Barra Libre</strong>
+                                                    <strong>Fiesta</strong>
                                                     <div class="text-caption mb-2">
                                                         La Quinta de Jarama
                                                     </div>                         
