@@ -18,12 +18,8 @@ export class BackedService {
         return await axios.put("/.netlify/functions/saveConfirmationVersion",object)        
     }
 
-    async checkRecaptcha(response){        
-        const body = {
-            secret: process.env.VUE_APP_RECAPTCHA_SERVER_KEY,
-            response: response
-        }
-        return await axios.post("https://www.google.com/recaptcha/api/siteverify",body)        
+    async checkRecaptcha(response){
+        return await axios.post("/.netlify/functions/checkRecaptcha",{token:response})
     }
 }
 

@@ -40,7 +40,7 @@
                   <div class="d-flex">
                     <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />
                     <v-btn elevation="2" class="ml-2" color="success" @click="searchPhone()">Continuar</v-btn>
-                    <v-btn elevation="2" class="ml-2" color="primary" @click="resetData()">Reiniciar</v-btn>                    
+                    <v-btn elevation="2" class="ml-2" color="primary" @click="resetData()">Reiniciar</v-btn>
                   </div>
                 </v-col>
                 <v-col cols="12" v-if="missingData">
@@ -112,9 +112,10 @@
                       <v-row align="center" justify="center">
                         <v-col cols="12">
                           <p class="text-center">Muchas gracias por confirmarnos.!</p>
-                        </v-col>                        
-                        <VueReCaptcha ref="recaptcha" @verify="onVerify" :sitekey=siteKey></VueReCaptcha>
-                        <v-btn class="center" color="success" @click="save()" v-if="realUser" full-width>Guardar Información</v-btn>                        
+                        </v-col>
+                        <VueReCaptcha v-if="!realUser" ref="recaptcha" @verify="onVerify" :sitekey=siteKey></VueReCaptcha>
+                        <v-btn class="center" color="success" @click="save()" v-if="realUser" full-width>Guardar
+                          Información</v-btn>
                       </v-row>
                     </div>
                   </div>
@@ -147,8 +148,8 @@ export default {
   },
   data() {
     return {
-      siteKey:process.env.VUE_APP_RECAPTCHA_SITE_KEY,
-      realUser:false,
+      siteKey: process.env.VUE_APP_RECAPTCHA_SITE_KEY,
+      realUser: false,
       missingData: false,
       resultDone: false,
       counter: 0,
@@ -199,7 +200,7 @@ export default {
   },
   methods: {
     resetData() {
-      this.realUser=false
+      this.realUser = false
       this.fullname = ''
       this.telephone = ''
       this.counter = 0
@@ -291,8 +292,18 @@ export default {
       }
     },
     async onVerify(response) {
-      let result = await api.checkRecaptcha(response);
-      console.log(result)
+      try {
+        await api.checkRecaptcha(response);
+        this.realUser = true;        
+      } catch (error) {
+        this.$fire({
+          title: "Error",
+          text: "Ha ocurrido un error, Intentalo de nuevo mas tarde",
+          type: "error",
+          timer: 5000
+        });
+      }
+
     }
   }
 }
