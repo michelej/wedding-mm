@@ -30,33 +30,37 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" xl="5">
+                <v-col cols="12" xl="4">
                   <div class="d-flex">
                     <v-text-field class="flex-grow-1" dense outlined v-model="fullname"
                       label="Nombre completo"></v-text-field>
                   </div>
                 </v-col>
-                <v-col cols="12" xl="7">
+                <v-col cols="12" xl="4">
                   <div class="d-flex">
-                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />
+                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />                    
+                  </div>
+                </v-col>
+                <v-col cols="12" xl="4" class="mt-2 mb-2">
+                  <div class="d-flex">
                     <v-btn elevation="2" class="ml-2" color="success" @click="searchPhone()">Continuar</v-btn>
                     <v-btn elevation="2" class="ml-2" color="primary" @click="resetData()">Reiniciar</v-btn>
                   </div>
                 </v-col>
                 <v-col cols="12" v-if="missingData">
-                  <v-alert type="warning"> Porfavor , rellenar los datos antes de continuar.</v-alert>
+                  <v-alert type="error"> Por favor , rellenar los datos antes de continuar.</v-alert>
                 </v-col>
               </v-row>
 
 
               <div class="d-flex" v-if="resultDone">
-                <div class="result-done text-justify">Hemos recopilado tu información, si lo deseas lo puedes
+                <div class="result-done text-justify mt-5">Hemos recopilado tu información, si lo deseas lo puedes
                   volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el
                   <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !
                 </div>
               </div>
 
-              <div v-if="searchDone" class="search-field">
+              <div v-if="searchDone" class="search-field mt-4">
                 <div class="d-flex flex-column">
                   <div class="assitance-group">
                     <v-radio-group v-model="user.assistance" label="Primero que todo indicanos si vas a asistir?"
@@ -103,7 +107,8 @@
 
                       <v-row>
                         <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
-                          <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
+                          <VueReCaptcha v-if="!realUser" ref="recaptcha" @verify="onVerify" :sitekey=siteKey></VueReCaptcha>
+                          <v-btn right color="success" @click="save()" v-if="realUser" full-width>Guardar Información</v-btn>
                         </v-col>
                       </v-row>
                     </div>
@@ -175,8 +180,7 @@ export default {
       defaultCountry: "ES"
     };
   },
-  mounted() {
-    console.log(process.env);
+  mounted() {    
     fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => { this.ipAddress = data.ip; })
       .catch(error => {
         console.error('Error fetching IP address', error);
@@ -214,6 +218,7 @@ export default {
     },
     async searchPhone() {
       this.missingData = false;
+      this.realUser = false;
       if (this.fullname != '' && this.telephone != '') {
         try {
           this.resultDone = false;
