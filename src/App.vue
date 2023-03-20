@@ -33,6 +33,12 @@
             </v-list-item-content>
           </v-list-item>
 
+          <v-list-item v-if="isAdmin" class="side-menu-link" :class="isActive('admin')" link @click="changeTab('admin')">
+            <v-list-item-content>
+              <v-list-item-title class="text-link">Admin</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
         </v-list>
       </v-navigation-drawer>
     </template>
@@ -52,6 +58,11 @@
             id="information-tab">
             <div v-if="$vuetify.breakpoint.smAndDown">Info</div>
             <div v-else>Cronograma</div>
+          </v-tab>
+          <v-tab v-if="isAdmin" class="d-none d-md-flex d-lg-flex" style="color:white;" @click="changeTab('admin')"
+            id="information-tab">
+            <div v-if="$vuetify.breakpoint.smAndDown">Admin</div>
+            <div v-else>Admin</div>
           </v-tab>
         </v-tabs>
       </v-app-bar>
@@ -87,6 +98,8 @@ export default {
         this.$router.push('/confirmation')
       } else if (tabId === 'information') {
         this.$router.push('/information')
+      } else if (tabId === 'admin') {
+        this.$router.push('/admin')
       }
     },
     isActive(router) {
@@ -98,6 +111,9 @@ export default {
   computed: {
     isSmallScreen() {
       return this.$vuetify.breakpoint.width < 600; // ajuste el ancho según sea necesario
+    },
+    isAdmin(){      
+      return process.env.VUE_APP_ADMIN == 'true'
     }
   }
 };

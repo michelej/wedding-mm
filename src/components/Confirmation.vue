@@ -2,7 +2,7 @@
   <v-main class="confirmation">
     <v-container grow d-flex flex-column flex-nowrap>
       <v-row justify="center" class="grow">
-        
+
         <v-col xs="12" sm="12" md="10" lg="9" xl="7" class="main-row">
           <v-card fill-height>
             <div class="card-content">
@@ -18,24 +18,33 @@
                 </v-col>
                 <v-col cols="12" xl="6">
                   <p class="text-content-top text-content text-justify texts"> Para confirmar tu asistencia a la boda solo
-                    tienes que escribir tu
-                    numero de
-                    teléfono y darle click en
-                    <strong>buscar</strong>,
-                    aparecerá tu nombre y solo tienes que decir si vienes o no a la boda. (lo de dejar mensaje es opcional
-                    pero
-                    nos hace ilusión) :)
+                    tienes que escribir tu nombre completo y tu numero de teléfono para poder identificarte, recuerda si
+                    vienes con tu pareja o hijo
+                    de incluirlos.
                   </p>
                 </v-col>
               </v-row>
-
-              <v-row class="mb-5">
-                <v-col cols="12" xl="8" offset-xl="2">
+              <v-row>
+                <v-col cols="12" xl="6">
+                  <strong>Rellene sus datos</strong>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" xl="5">
                   <div class="d-flex">
-                    <!--<v-text-field class="flex-grow-1" dense outlined v-model="telephone" label="Teléfono"></v-text-field>-->
-                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries'/>
-                    <v-btn elevation="2" class="ml-2" color="primary" @click="searchPhone()">Buscar</v-btn>
+                    <v-text-field class="flex-grow-1" dense outlined v-model="fullname"
+                      label="Nombre completo"></v-text-field>
                   </div>
+                </v-col>
+                <v-col cols="12" xl="7">
+                  <div class="d-flex">
+                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />
+                    <v-btn elevation="2" class="ml-2" color="success" @click="searchPhone()">Continuar</v-btn>
+                    <v-btn elevation="2" class="ml-2" color="primary" @click="resetData()">Reiniciar</v-btn>                    
+                  </div>
+                </v-col>
+                <v-col cols="12" v-if="missingData">
+                  <v-alert type="warning"> Porfavor , rellenar los datos antes de continuar.</v-alert>
                 </v-col>
               </v-row>
 
@@ -43,16 +52,12 @@
               <div class="d-flex" v-if="resultDone">
                 <div class="result-done text-justify">Hemos recopilado tu información, si lo deseas lo puedes
                   volver a hacer si necesitas rectificar o cambiar algo lo podras hacer hasta el
-                  <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !</div>
+                  <strong>{{ deadline }}</strong> en ese punto sera todo definitivo.<br> <br> Gracias !
+                </div>
               </div>
 
               <div v-if="searchDone" class="search-field">
-                <div class="d-flex flex-column" v-if="phoneFound">
-                  <div class="flex-grow-1">
-                    <v-alert type="success">
-                      Hola! <strong>{{ user.fullname }}</strong>
-                    </v-alert>
-                  </div>
+                <div class="d-flex flex-column">
                   <div class="assitance-group">
                     <v-radio-group v-model="user.assistance" label="Primero que todo indicanos si vas a asistir?"
                       :value="null" @change="onOptionSelected">
@@ -62,28 +67,29 @@
                   </div>
 
                   <div v-if="choiceSelected">
-                    <div v-if="willAssist">                      
-                      
-                      <v-row align-content="stretch" class="bordered" v-for="(c,index) in user.guests" :key="c.id">                        
+                    <div v-if="willAssist">
+
+                      <v-row align-content="stretch" class="bordered" v-for="(c, index) in user.guests" :key="c.id">
                         <v-col cols="6">
-                          <div><strong>Acompañante {{index+1}}</strong></div>                          
+                          <div><strong>Acompañante {{ index + 1 }}</strong></div>
                         </v-col>
                         <v-col cols="6" class="text-right">
-                          <v-btn color="error" class="button ml-2 mt-0 right" fab small @click="removeGuest(c.id)"><v-icon dark>
+                          <v-btn color="error" class="button ml-2 mt-0 right" fab small @click="removeGuest(c.id)"><v-icon
+                              dark>
                               mdi-minus
                             </v-icon></v-btn>
                         </v-col>
                         <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
-                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name"
-                            label="Nombre completo" required></v-text-field>
+                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name" label="Nombre completo"
+                            required></v-text-field>
                         </v-col>
                         <v-col cols="12" xs="12" sm="12" md="12" lg="5" xl="5" class="pt-0 pb-0">
                           <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
                             label="Adulto o Niño" outlined></v-select>
-                        </v-col>                        
+                        </v-col>
                       </v-row>
                       <v-col xs="12" class="d-flex mb-5">
-                       <v-btn left color="primary" @click="addGuest()" full-width>Añadir acompañante o hijos</v-btn>
+                        <v-btn left color="primary" @click="addGuest()" full-width>Añadir acompañante o hijos</v-btn>
                       </v-col>
 
                       <v-label for="textarea1">¿Alguna alergia o algo que debamos tener en cuenta?</v-label>
@@ -95,7 +101,7 @@
                       <v-checkbox v-model="user.autocar" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
 
 
-                      <v-row>                   
+                      <v-row>
                         <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
                           <v-btn right color="success" @click="save()" full-width>Guardar Información</v-btn>
                         </v-col>
@@ -106,18 +112,15 @@
                       <v-row align="center" justify="center">
                         <v-col cols="12">
                           <p class="text-center">Muchas gracias por confirmarnos.!</p>
-                        </v-col>
-                        <v-btn class="center" color="success" @click="save()" full-width>Guardar Información</v-btn>
+                        </v-col>                        
+                        <VueReCaptcha ref="recaptcha" @verify="onVerify" :sitekey=siteKey></VueReCaptcha>
+                        <v-btn class="center" color="success" @click="save()" v-if="realUser" full-width>Guardar Información</v-btn>                        
                       </v-row>
                     </div>
                   </div>
 
                 </div>
-                <div class="d-flex" v-else>
-                  <v-alert class="flex-grow-1" type="warning">
-                    Hola! parece que no hemos encontrado tu numero de teléfono.
-                  </v-alert>
-                </div>
+
               </div>
 
             </div>
@@ -130,6 +133,7 @@
 </template>
   
 <script>
+import VueReCaptcha from 'vue-recaptcha';
 import HeaderCouple from "@/components/HeaderCouple.vue";
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
@@ -138,12 +142,17 @@ export default {
   name: 'ConfirmationPage',
   components: {
     HeaderCouple,
-    VuePhoneNumberInput
+    VuePhoneNumberInput,
+    VueReCaptcha
   },
   data() {
     return {
+      siteKey:process.env.VUE_APP_RECAPTCHA_SITE_KEY,
+      realUser:false,
+      missingData: false,
       resultDone: false,
       counter: 0,
+      fullname: '',
       telephone: '',
       searchDone: false,
       phoneFound: false,
@@ -155,17 +164,18 @@ export default {
       },
       ipAddress: '',
       deadline: '10 de Abril',
-      translations:{
+      translations: {
         countrySelectorLabel: 'Pais',
         countrySelectorError: 'Elige un Pais',
         phoneNumberLabel: 'Teléfono',
         example: 'Ejemplo :'
       },
-      countries:["ES","DE","CO","VE"],
-      defaultCountry:"ES"
+      countries: ["ES", "DE", "CO", "VE"],
+      defaultCountry: "ES"
     };
   },
   mounted() {
+    console.log(process.env);
     fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => { this.ipAddress = data.ip; })
       .catch(error => {
         console.error('Error fetching IP address', error);
@@ -173,29 +183,65 @@ export default {
   },
   computed: {
   },
+  watch: {
+    fullname() {
+      if (this.missingData) {
+        this.resetData();
+      }
+      this.missingData = false;
+    },
+    telephone() {
+      if (this.missingData) {
+        this.resetData();
+      }
+      this.missingData = false;
+    }
+  },
   methods: {
+    resetData() {
+      this.realUser=false
+      this.fullname = ''
+      this.telephone = ''
+      this.counter = 0
+      this.searchDone = false
+      this.phoneFound = false
+      this.choiceSelected = false
+      this.willAssist = false
+      this.user = {
+        assistance: null
+      }
+    },
     async searchPhone() {
-      try {
-        this.resultDone = false;        
-        let response = await api.searchConfirmation(this.telephone.replaceAll(" ",""));
-        this.searchDone = true
-        this.phoneFound = false
-        if (response.status == 200) {
-          this.phoneFound = true
-          this.user = response.data
+      this.missingData = false;
+      if (this.fullname != '' && this.telephone != '') {
+        try {
+          this.resultDone = false;
+          this.telephone = this.telephone.replaceAll(" ", "")
+          let response = await api.searchConfirmation(this.telephone);
+          this.searchDone = true
+          this.phoneFound = false
+          if (response.status == 200) {
+            this.phoneFound = true
+            this.user = response.data
+          } else if (response.status == 204) {
+            this.phoneFound = false
+            this.user.fullname = this.fullname
+            this.user.telephone = this.telephone
+          }
+          this.user.guests = []
           this.user.ipAddress = this.ipAddress
           this.user.assistance = null
           this.user.autocar = null
-        } else if (response.status == 204) {
-          this.phoneFound = false
+        } catch (error) {
+          this.$fire({
+            title: "Error",
+            text: "Ha ocurrido un error, Intentalo de nuevo mas tarde",
+            type: "error",
+            timer: 5000
+          });
         }
-      } catch (error) {
-        this.$fire({
-          title: "Error",
-          text: "Ha ocurrido un error, Intentalo de nuevo mas tarde",
-          type: "error",
-          timer: 5000
-        });
+      } else {
+        this.missingData = true;
       }
     },
     addGuest() {
@@ -213,26 +259,21 @@ export default {
       this.choiceSelected = true
       this.willAssist = this.user.assistance
     },
-    reset() {
-      this.counter = 0
-      this.telephone = ''
-      this.searchDone = false
-      this.phoneFound = false
-      this.choiceSelected = false
-      this.willAssist = false
-      this.user = {
-        assistance: null
-      }
-    },
     async save() {
       try {
         if (this.user.assistance == true) {
           this.user.guests = this.user.guests.filter(e => e.name != '')
         } else {
           this.user.guests = []
-        }        
-        await api.saveConfirmation(this.user);
-        this.reset();
+        }
+        if (this.user.objectId) {
+          await api.saveConfirmation(this.user);
+        } else {
+          await api.createConfirmation(this.user);
+        }
+
+        await api.saveConfirmationVersion(this.user);
+        this.resetData();
         this.resultDone = true
         this.$fire({
           title: "Exito",
@@ -248,16 +289,20 @@ export default {
           timer: 5000
         });
       }
-
+    },
+    async onVerify(response) {
+      let result = await api.checkRecaptcha(response);
+      console.log(result)
     }
   }
 }
 </script>
 <style lang="scss">
 @import "@/assets/scss/variables.scss";
+
 .confirmation {
-  background: rgb(244,244,244);
-  background: linear-gradient(90deg, rgba(244,244,244,1) 0%, rgba(227,236,227,1) 50%, rgba(219,226,221,1) 100%);
+  background: rgb(244, 244, 244);
+  background: linear-gradient(90deg, rgba(244, 244, 244, 1) 0%, rgba(227, 236, 227, 1) 50%, rgba(219, 226, 221, 1) 100%);
 
   .text-top {
     padding: 0px;
@@ -295,8 +340,9 @@ export default {
     line-height: 24px;
     padding: 0 4px;
   }
-  .result-done{
-    border: #88a185 solid 1px;    
+
+  .result-done {
+    border: #88a185 solid 1px;
     padding: 10px;
   }
 }

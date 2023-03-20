@@ -9,8 +9,16 @@ import VueSimpleAlert from "vue-simple-alert";
 Vue.config.productionTip = false
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
+
+const DEFAULT_TITLE = 'Boda de Michel & Marlis';
+router.afterEach((to) => {    
+    Vue.nextTick(() => {
+        document.title = to.meta.title || DEFAULT_TITLE;
+    });
+});
 
 Vue.use(VueRouter)
 Vue.use(VueSimpleAlert)
