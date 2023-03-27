@@ -10,8 +10,14 @@
 
 
 
-                            <v-data-table dense v-if="loaded" :items="users" item-key="telephone" :headers="headers">
-
+                            <v-data-table dense v-if="loaded" :items="users" item-key="telephone" :headers="headers"
+                                show-expand class="elevation-1">
+                                <template v-slot:expanded-item="{ headers, item }">
+                                    <td :colspan="headers.length">
+                                        <v-data-table class="sub-table elevation-0" :headers="subHeaders" :items="item.guests"
+                                            item-key="id" hide-default-footer></v-data-table>
+                                    </td>
+                                </template>
                             </v-data-table>
 
                         </div>
@@ -35,9 +41,17 @@ export default {
             loaded: false,
             users: [],
             headers: [
-                { text: 'fullname', value: 'fullname' },
-                { text: 'telephone', value: 'telephone' }                
+                { text: 'Nombre', value: 'fullname' },
+                { text: 'Telefono', value: 'telephone' },
+                { text: 'Asistencia', value: 'assistance' },
+                { text: 'Comentario', value: 'comments' },
+                { text: 'Alergias', value: 'allergies' },
+                { text: 'IpAddress', value: 'ipAddress' }
             ],
+            subHeaders:[
+                { text : 'Nombre', value: 'name'},
+                { text : 'Adulto o Niño', value: 'type'}
+            ]
         }
     },
     async mounted() {
@@ -65,5 +79,7 @@ export default {
         font-size: 20px;
         text-align: justify;
     }
+    .sub-table.theme--light.v-data-table { background: transparent; }
+    .sub-table .v-data-table-header { display: none; }
 }
 </style>   

@@ -38,7 +38,7 @@
                 </v-col>
                 <v-col cols="12" xl="4">
                   <div class="d-flex">
-                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />                    
+                    <VuePhoneNumberInput v-model="telephone" :translations='translations' :only-countries='countries' />
                   </div>
                 </v-col>
                 <v-col cols="12" xl="4" class="mt-2 mb-2">
@@ -73,25 +73,28 @@
                   <div v-if="choiceSelected">
                     <div v-if="willAssist">
 
-                      <v-row align-content="stretch" class="bordered" v-for="(c, index) in user.guests" :key="c.id">
-                        <v-col cols="6">
-                          <div><strong>Acompañante {{ index + 1 }}</strong></div>
-                        </v-col>
-                        <v-col cols="6" class="text-right">
-                          <v-btn color="error" class="button ml-2 mt-0 right" fab small @click="removeGuest(c.id)"><v-icon
-                              dark>
-                              mdi-minus
-                            </v-icon></v-btn>
-                        </v-col>
-                        <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
-                          <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name" label="Nombre completo"
-                            required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" xs="12" sm="12" md="12" lg="5" xl="5" class="pt-0 pb-0">
-                          <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
-                            label="Adulto o Niño" outlined></v-select>
-                        </v-col>
-                      </v-row>
+                      <template v-if="counter > 0">
+                        <v-row align-content="stretch" class="bordered" v-for="(c, index) in user.guests" :key="c.id">
+                          <v-col cols="6">
+                            <div><strong>Acompañante {{ index + 1 }}</strong></div>
+                          </v-col>
+                          <v-col cols="6" class="text-right">
+                            <v-btn color="error" class="button ml-2 mt-0 right" fab small
+                              @click="removeGuest(c.id)"><v-icon dark>
+                                mdi-minus
+                              </v-icon></v-btn>
+                          </v-col>
+                          <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="7" class="pt-0 pb-0">
+                            <v-text-field class="flex-grow-1 small" dense outlined v-model="c.name"
+                              label="Nombre completo" required></v-text-field>
+                          </v-col>
+                          <v-col cols="12" xs="12" sm="12" md="12" lg="5" xl="5" class="pt-0 pb-0">
+                            <v-select class="flex-grow-1 small" dense :items="personType" v-model="c.type"
+                              label="Adulto o Niño" outlined></v-select>
+                          </v-col>
+                        </v-row>
+                      </template>
+
                       <v-col xs="12" class="d-flex mb-5">
                         <v-btn left color="primary" @click="addGuest()" full-width>Añadir acompañante o hijos</v-btn>
                       </v-col>
@@ -102,13 +105,15 @@
                       <v-label for="textarea2">Deja un comentario adicional si lo deseas</v-label>
                       <v-textarea outlined id="textarea2" v-model="user.comments"></v-textarea>
 
-                      
+
 
 
                       <v-row>
                         <v-col xs="12" sm="12" md="6" lg="6" xl="6" class="d-flex justify-center align-center">
-                          <VueReCaptcha v-if="!realUser" ref="recaptcha" @verify="onVerify" :sitekey=siteKey></VueReCaptcha>
-                          <v-btn right color="success" @click="save()" v-if="realUser" full-width>Guardar Información</v-btn>
+                          <VueReCaptcha v-if="!realUser" ref="recaptcha" @verify="onVerify" :sitekey=siteKey>
+                          </VueReCaptcha>
+                          <v-btn right color="success" @click="save()" v-if="realUser" full-width>Guardar
+                            Información</v-btn>
                         </v-col>
                       </v-row>
                     </div>
@@ -180,13 +185,11 @@ export default {
       defaultCountry: "ES"
     };
   },
-  mounted() {    
+  mounted() {
     fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => { this.ipAddress = data.ip; })
       .catch(error => {
         console.error('Error fetching IP address', error);
       });
-  },
-  computed: {
   },
   watch: {
     fullname() {
@@ -238,6 +241,8 @@ export default {
           this.user.ipAddress = this.ipAddress
           this.user.assistance = null
           this.user.autocar = null
+          this.user.objectId = null
+          console.log(this.user);
         } catch (error) {
           this.$fire({
             title: "Error",
@@ -254,11 +259,11 @@ export default {
       this.user.guests.push({ id: this.counter, name: '', type: this.personType[0] })
       this.counter = this.counter + 1;
     },
-    removeGuest(id) {      
+    removeGuest(id) {
       if (this.user.guests.length == 1) {
         this.user.guests = []
       } else {
-        this.user.guests = this.user.guests.filter( guest => guest.id != id);
+        this.user.guests = this.user.guests.filter(guest => guest.id != id);
       }
     },
     onOptionSelected() {
@@ -299,7 +304,7 @@ export default {
     async onVerify(response) {
       try {
         await api.checkRecaptcha(response);
-        this.realUser = true;        
+        this.realUser = true;
       } catch (error) {
         this.$fire({
           title: "Error",
