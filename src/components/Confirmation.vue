@@ -1,6 +1,7 @@
 <template>
   <v-main class="confirmation">
     <v-container grow d-flex flex-column flex-nowrap>
+      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
       <v-row justify="center" class="grow">
 
         <v-col xs="12" sm="12" md="10" lg="9" xl="7" class="main-row">
@@ -144,6 +145,8 @@
 </template>
   
 <script>
+import Loading from 'vue-loading-overlay';    
+import 'vue-loading-overlay/dist/vue-loading.css';
 import VueReCaptcha from 'vue-recaptcha';
 import HeaderCouple from "@/components/HeaderCouple.vue";
 import VuePhoneNumberInput from 'vue-phone-number-input';
@@ -154,10 +157,13 @@ export default {
   components: {
     HeaderCouple,
     VuePhoneNumberInput,
-    VueReCaptcha
+    VueReCaptcha,
+    Loading
   },
   data() {
     return {
+      fullPage:true,
+      isLoading:false,
       siteKey: process.env.VUE_APP_RECAPTCHA_SITE_KEY,
       realUser: false,
       missingData: false,
@@ -221,10 +227,11 @@ export default {
     },
     async searchPhone() {
       this.missingData = false;
-      this.realUser = false;
+      this.realUser = false;      
       if (this.fullname != '' && this.telephone != '') {
+        this.isLoading = true
         try {
-          this.resultDone = false;
+          this.resultDone = false
           this.telephone = this.telephone.replaceAll(" ", "")
           let response = await api.searchConfirmation(this.telephone);
           this.searchDone = true
@@ -241,8 +248,8 @@ export default {
           this.user.ipAddress = this.ipAddress
           this.user.assistance = null
           this.user.autocar = null
-          this.user.objectId = null
-          console.log(this.user);
+          this.user.objectId = null       
+          this.isLoading = false   
         } catch (error) {
           this.$fire({
             title: "Error",
@@ -250,6 +257,7 @@ export default {
             type: "error",
             timer: 5000
           });
+          this.isLoading = false
         }
       } else {
         this.missingData = true;
@@ -272,6 +280,7 @@ export default {
     },
     async save() {
       try {
+        this.isLoading = true
         if (this.user.assistance == true) {
           this.user.guests = this.user.guests.filter(e => e.name != '')
         } else {
@@ -286,6 +295,7 @@ export default {
         await api.saveConfirmationVersion(this.user);
         this.resetData();
         this.resultDone = true
+        this.isLoading = false
         this.$fire({
           title: "Exito",
           text: "El formulario se ha enviado con exito, ya tenemos tu información.",
@@ -299,6 +309,7 @@ export default {
           type: "error",
           timer: 5000
         });
+        this.isLoading = false
       }
     },
     async onVerify(response) {
