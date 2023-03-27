@@ -21,6 +21,10 @@ export class BackedService {
     async checkRecaptcha(response){
         return await axios.post("/.netlify/functions/checkRecaptcha",{token:response})
     }
+
+    async findAllConfirmations(){
+        return await axios.get("/.netlify/functions/findAllConfirmation")
+    }
 }
 
 export default new BackedService();

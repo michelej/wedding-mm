@@ -7,36 +7,29 @@ Parse.initialize(
 );
 
 exports.handler = async (event, context) => {
-    try {
-        const { telephone } = event.queryStringParameters;
-        const ConfirmationParse = Parse.Object.extend('Confirmation');
-        const query = new Parse.Query(ConfirmationParse);
-        query.equalTo('telephone', telephone);
-        query.select('fullname','telephone');
-        const response = await query.find();
-
-        let obj = {}
-        if (response.length > 0) {
-            obj = {
-                fullname: response[0].get('fullname'),
-                telephone: response[0].get('telephone'),
-                objectId: response[0].id,
-                guests: []
-                //comments: response[0].get('comments'),
-                //assistance: response[0].get('assistance'),
-                //guests: response[0].get('guests') ? response[0].get('guests') : []
+    try {        
+        const Confirmation = Parse.Object.extend('Confirmation');
+        const query = new Parse.Query(Confirmation);   
+        const results = await query.find();        
+        let objs = []
+        for (const object of results) {             
+            let obj = {
+                telephone: object.get('telephone'),
+                fullname: object.get('fullname'),
+                assistance: object.get('assistance'),
+                guests: object.get('guests'),
+                comments: object.get('comments')?object.get('comments'):'',
+                ipAddress: object.get('ipAddress'),
+                allergies: object.get('allergies')?object.get('allergies'):'',
+                autocar: object.get('autocar')
             }
-            return {
-                statusCode: 200,
-                body: JSON.stringify(obj)
-            };
-        } else {
-            return {
-                statusCode: 204,
-                body: ''
-            };
+            objs.push(obj);
         }
-    } catch (error) {        
+        return {
+            statusCode: 200,
+            body: JSON.stringify(objs)
+        };
+    } catch (error) {
         return {
             statusCode: 400,
             body: JSON.stringify(error)

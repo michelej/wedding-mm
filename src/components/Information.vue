@@ -30,7 +30,7 @@
                                         <v-timeline-item color="teal lighten-3" small>
                                             <v-row class="pt-1">
                                                 <v-col cols="4">
-                                                    <strong>20:00</strong>
+                                                    <strong>19:30</strong>
                                                 </v-col>
                                                 <v-col>
                                                     <strong>Coctel de Bienvenida</strong>
@@ -71,7 +71,7 @@
                                         <v-timeline-item color="teal lighten-3" small>
                                             <v-row class="pt-1">
                                                 <v-col cols="4">
-                                                    <strong>05:00</strong>
+                                                    <strong>05:30</strong>
                                                 </v-col>
                                                 <v-col>
                                                     <strong>Fin de la fiesta</strong>

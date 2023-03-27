@@ -3,11 +3,17 @@
         <v-container grow d-flex flex-column flex-nowrap>
             <v-row justify="center" class="grow">
 
-                <v-col xs="12" sm="12" md="10" lg="9" xl="7" class="main-row">
+                <v-col col="12" class="main-row">
                     <v-card fill-height>
                         <div class="card-content">
+                            <h2>Listado de invitados</h2>
 
-                           
+
+
+                            <v-data-table dense v-if="loaded" :items="users" item-key="telephone" :headers="headers">
+
+                            </v-data-table>
+
                         </div>
                     </v-card>
                 </v-col>
@@ -19,12 +25,27 @@
 </template>
    
 <script>
-import HeaderCouple from "@/components/HeaderCouple.vue";
+import api from "../services/backend";
 export default {
     components: {
-        HeaderCouple,
     },
-    name: 'InformationPage'
+    name: 'InformationPage',
+    data() {
+        return {
+            loaded: false,
+            users: [],
+            headers: [
+                { text: 'fullname', value: 'fullname' },
+                { text: 'telephone', value: 'telephone' }                
+            ],
+        }
+    },
+    async mounted() {
+        let response = await api.findAllConfirmations();
+        this.users = response.data
+        this.loaded = true
+        console.log(this.users);
+    },
 }
 </script>
 <style lang="scss">

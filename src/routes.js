@@ -1,6 +1,7 @@
 import MainPage from './components/MainPage.vue'
 import Confirmation from './components/Confirmation.vue'
 import Information from './components/Information.vue'
+import Admin from './components/AdminPage.vue'
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
   {
     path: '/information',
     component: Information
+  },
+  {
+    path: '/admin',
+    component: Admin
   }
 ]
 

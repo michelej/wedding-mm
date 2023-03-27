@@ -2,7 +2,7 @@
   <div class="header-theme">
     <v-row>
       <v-col cols="12" sm="5" md="4" lg="4" xl="4"  class="background d-flex align-center couples-text">
-        <div class="header-text">{{ groom }} / {{ bride }}</div>
+        <div class="header-text">{{ groom }} y {{ bride }}</div>
       </v-col>
       <v-col cols="3" sm="2" md="4" lg="4" xl="4" class="d-none d-sm-flex d-lg-flex"></v-col>
       <v-col cols="12" sm="5" md="4" lg="4" xl="4">

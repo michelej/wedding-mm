@@ -26,10 +26,7 @@
               </v-row>
 
 
-              <v-row>
-                <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
-                  <div class="text-header texts">Michel y Marlis</div>
-                </v-col>
+              <v-row>            
                 <v-col cols="12" xl="8" offset-xl="2" class="d-flex align-center justify-center">
                   <div class="v-center text-top texts">¡Nos casamos!</div>
                 </v-col>

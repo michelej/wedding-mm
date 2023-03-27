@@ -102,7 +102,7 @@
                       <v-label for="textarea2">Deja un comentario adicional si lo deseas</v-label>
                       <v-textarea outlined id="textarea2" v-model="user.comments"></v-textarea>
 
-                      <v-checkbox v-model="user.autocar" label="Te gustaria un servicio de autocar/autobus?"></v-checkbox>
+                      
 
 
                       <v-row>
@@ -254,11 +254,11 @@ export default {
       this.user.guests.push({ id: this.counter, name: '', type: this.personType[0] })
       this.counter = this.counter + 1;
     },
-    removeGuest(id) {
+    removeGuest(id) {      
       if (this.user.guests.length == 1) {
         this.user.guests = []
       } else {
-        this.user.guests.splice(id, 1)
+        this.user.guests = this.user.guests.filter( guest => guest.id != id);
       }
     },
     onOptionSelected() {
