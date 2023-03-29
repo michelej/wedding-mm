@@ -6,7 +6,7 @@
 
         <v-col xs="12" sm="12" md="10" lg="9" xl="7" class="main-row">
           <v-card fill-height>
-            <div class="card-content">
+            <div class="card-content" v-if="available()">
 
               <header-couple></header-couple>
 
@@ -136,6 +136,30 @@
               </div>
 
             </div>
+            <div class="card-content" v-else>
+              <header-couple></header-couple>
+
+              <v-row class="pt-5 pb-0">
+                <v-col cols="12">
+                  <div class="text-top text-center">¿Nos acompañas o te lo pierdes?</div>
+                </v-col>
+                <v-col cols="12" xl="6">
+                  <v-img :src="require('@/assets/rsvp-card.jpg')" height="180px"></v-img>
+                </v-col>
+                <v-col cols="12" xl="6">
+                  <p class="text-content-top text-content text-justify texts"> Para confirmar tu asistencia a la boda solo
+                    tienes que escribir tu nombre completo y tu numero de teléfono para poder identificarte, recuerda si
+                    vienes con tu pareja o hijo
+                    de incluirlos.
+                  </p>                                    
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                <v-alert type="info"> El plazo se ha cumplido, ya queda muy poco para el gran dia</v-alert>
+                </v-col>
+              </v-row>
+            </div>
           </v-card>
 
         </v-col>
@@ -145,7 +169,7 @@
 </template>
   
 <script>
-import Loading from 'vue-loading-overlay';    
+import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VueReCaptcha from 'vue-recaptcha';
 import HeaderCouple from "@/components/HeaderCouple.vue";
@@ -162,8 +186,8 @@ export default {
   },
   data() {
     return {
-      fullPage:true,
-      isLoading:false,
+      fullPage: true,
+      isLoading: false,
       siteKey: process.env.VUE_APP_RECAPTCHA_SITE_KEY,
       realUser: false,
       missingData: false,
@@ -181,6 +205,7 @@ export default {
       },
       ipAddress: '',
       deadline: '10 de Abril',
+      deatlineTime: new Date("2023-04-10"),
       translations: {
         countrySelectorLabel: 'Pais',
         countrySelectorError: 'Elige un Pais',
@@ -212,6 +237,9 @@ export default {
     }
   },
   methods: {
+    available() {      
+      return new Date() < this.deatlineTime;
+    },
     resetData() {
       this.realUser = false
       this.fullname = ''
@@ -227,7 +255,7 @@ export default {
     },
     async searchPhone() {
       this.missingData = false;
-      this.realUser = false;      
+      this.realUser = false;
       if (this.fullname != '' && this.telephone != '') {
         this.isLoading = true
         try {
@@ -248,8 +276,8 @@ export default {
           this.user.ipAddress = this.ipAddress
           this.user.assistance = null
           this.user.autocar = null
-          this.user.objectId = null       
-          this.isLoading = false   
+          this.user.objectId = null
+          this.isLoading = false
         } catch (error) {
           this.$fire({
             title: "Error",
