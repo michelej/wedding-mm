@@ -205,7 +205,7 @@ export default {
       },
       ipAddress: '',
       deadline: '10 de Abril',
-      deatlineTime: new Date("2023-04-10"),
+      deatlineTime: new Date("2023-04-11"),
       translations: {
         countrySelectorLabel: 'Pais',
         countrySelectorError: 'Elige un Pais',
