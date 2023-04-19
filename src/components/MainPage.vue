@@ -10,19 +10,10 @@
               <header-couple></header-couple>
 
               <v-row class="pt-5">
-                <v-col cols="6" sm="4" md="4" lg="4" xl="6">
-                  <v-img :src="require('@/assets/photos/pic6.jpg')" aspect-ratio="1" cover></v-img>
-                </v-col>
-                <v-col cols="6" sm="4" md="4" lg="4" xl="6">
+                
+                <v-col xs="12" sm="12" md="12" lg="12" xl="8" offset-xl="2">
                   <v-img :src="require('@/assets/photos/wedshoots.png')" aspect-ratio="1" cover></v-img>
-                </v-col>
-                <v-col cols="6" sm="4" md="4" lg="4" xl="6">
-                  <v-img :src="require('@/assets/photos/pic1.png')" aspect-ratio="1" cover></v-img>
-                </v-col>
-                <v-col cols="6" sm="4" md="4" lg="4" xl="6">
-                  <v-img :src="require('@/assets/photos/pic5.jpg')" aspect-ratio="1" cover></v-img>
-                </v-col>
-
+                </v-col>                                
               </v-row>
 
 
