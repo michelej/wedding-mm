@@ -96,8 +96,7 @@ export default {
   mounted() {    
   },
   methods: {
-    redirect(){
-      console.log(platform.os.family);
+    redirect(){      
       this.isIOS = platform.os.family === 'iOS';
       this.isAndroid = platform.os.family === 'Android';
       this.appStoreLink = 'https://itunes.apple.com/us/app/wedshoots/id660256196?ls=1&mt=8';
