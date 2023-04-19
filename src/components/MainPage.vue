@@ -103,6 +103,7 @@ export default {
       this.appStoreLink = 'https://itunes.apple.com/us/app/wedshoots/id660256196?ls=1&mt=8';
       this.googlePlayLink = 'https://play.google.com/store/apps/details?id=net.bodas.android.wedshoots&hl=es&gl=US&pli=1';
       this.downloadLink = this.isIOS ? this.appStoreLink : this.isAndroid ? this.googlePlayLink : '#';
+      window.location.href = this.downloadLink;
     }
   }
 }
