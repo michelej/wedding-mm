@@ -11,8 +11,8 @@
 
               <v-row class="pt-5">
                 
-                <v-col xs="12" sm="12" md="12" lg="12" xl="8" offset-xl="2">
-                  <v-img :src="require('@/assets/photos/wedshoots.png')" aspect-ratio="1" cover></v-img>
+                <v-col xs="12" sm="12" md="12" lg="12" xl="8" offset-xl="2">       
+                  <v-img :src="require('@/assets/photos/wedshoots.png')" aspect-ratio="1" cover  @click="redirect"></v-img>
                 </v-col>                                
               </v-row>
 
@@ -78,6 +78,7 @@
 </template>
   
 <script>
+import platform from 'platform';
 import HeaderCouple from "@/components/HeaderCouple.vue";
 export default {
   components: {
@@ -86,14 +87,23 @@ export default {
   name: 'MainPage',
   data() {
     return {
-     
+      isIOS:false,
+      isAndroid:false,
+      appStoreLink:"",
+      googlePlayLink:""
     }
   },
-  mounted() {
-   
+  mounted() {    
   },
   methods: {
-   
+    redirect(){
+      console.log(platform.os.family);
+      this.isIOS = platform.os.family === 'iOS';
+      this.isAndroid = platform.os.family === 'Android';
+      this.appStoreLink = 'https://itunes.apple.com/us/app/wedshoots/id660256196?ls=1&mt=8';
+      this.googlePlayLink = 'https://play.google.com/store/apps/details?id=net.bodas.android.wedshoots&hl=es&gl=US&pli=1';
+      this.downloadLink = this.isIOS ? this.appStoreLink : this.isAndroid ? this.googlePlayLink : '#';
+    }
   }
 }
 </script>
